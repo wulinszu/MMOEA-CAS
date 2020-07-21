@@ -1,4 +1,4 @@
-function NSGAII7_1(Global)
+function MMOEA-CAS(Global)
 % <algorithm> <H-N>
 % Fast and Elitist Multiobjective Genetic Algorithm: NSGA-II
 
@@ -18,12 +18,12 @@ function NSGAII7_1(Global)
     while Global.NotTermination(Population)
         MatingPool=randperm(Global.N);
         Offspring  = Global.Variation(Population(MatingPool));
-        %ÁªºÏÖÖÈº
+        %è”åˆç§ç¾¤
         union=[Population Offspring];
-        %global_archive±£´æÈ«¾Ö×îÓÅ½â
+        %global_archiveä¿å­˜å…¨å±€æœ€ä¼˜è§£
         [FrontNo,~]=NDSort(union.objs,length(union));
         global_A = find(FrontNo==1);
-        %»ùÓÚ¾ö²ß¿Õ¼äÁÚÓò¹ØÏµµÄ¾ÛÀà
+        %åŸºäºå†³ç­–ç©ºé—´é‚»åŸŸå…³ç³»çš„èšç±»
         range=max(union.decs,[],1)-min(union.decs,[],1);
         epsilon=mean(range)*0.1;
         K=3;
@@ -32,7 +32,7 @@ function NSGAII7_1(Global)
         for i=1:max(IDX)
             cluster=find(IDX==i);
             [FrontNo1,~]=NDSort(union(cluster).objs,length(cluster));
-            %local_archive´æ´¢¸÷¸ö´ØÖĞµÄ·ÇÖ§Åä½â
+            %local_archiveå­˜å‚¨å„ä¸ªç°‡ä¸­çš„éæ”¯é…è§£
             local_A=[local_A; cluster(FrontNo1==1)];
         end
         temp1=setdiff(global_A,local_A)';
@@ -56,7 +56,7 @@ function NSGAII7_1(Global)
         for i=1:length(newpop)-Global.N
             [crowd,rank]=Crowding(newpop.decs);
             c=hist(Region,1:size(W,1));
-            %aÖĞµÄË÷Òı±íÊ¾×îÓµ¼·µÄ×ÓÇøÓò
+            %aä¸­çš„ç´¢å¼•è¡¨ç¤ºæœ€æ‹¥æŒ¤çš„å­åŒºåŸŸ
             a=find(c==max(c));
             s=[];
             for j=1:length(a)
